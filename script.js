@@ -1,4 +1,4 @@
-// ==================== SWIPER INIT ====================
+﻿// ==================== SWIPER INIT ====================
 var swiper = new Swiper('.swiper-container', {
     loop: true,
     pagination: { el: '.swiper-pagination', clickable: true },
@@ -49,13 +49,13 @@ function updateCart() {
         cartItem.innerHTML = `
             <div class="item-details">
                 <h4>${product.item}</h4>
-                <p class="item-price">₹ ${product.price}</p>
+                <p class="item-price">&#8377; ${product.price}</p>
             </div>
             <button onclick="removeFromCart(${index})" class="btn" style="padding: 5px 10px; background: var(--secondary);">Remove</button>
         `;
         cartItems.appendChild(cartItem);
     });
-    cartTotal.textContent = `Total: ₹ ${total}`;
+    cartTotal.textContent = 'Total: Rs ' + total;
 }
 
 function removeFromCart(index) {
@@ -80,20 +80,19 @@ function checkout() {
     let message = "Hello Tirupati Traders, I would like to order the following items:%0A";
     let total = 0;
     cart.forEach(product => {
-        message += `- ${product.item}: ₹ ${product.price}%0A`;
+        message += '- ' + product.item + ': Rs ' + product.price + '%0A';
         total += product.price;
     });
-    message += `%0ATotal: ₹ ${total}%0A%0APlease contact me for delivery details.`;
-    // Use actual store WhatsApp number
+    message += '%0ATotal: Rs ' + total + '%0A%0APlease contact me for delivery details.';
     const phoneNumber = "918806713256";
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+    const whatsappUrl = 'https://wa.me/' + phoneNumber + '?text=' + message;
     window.open(whatsappUrl, '_blank');
 }
 
 // ==================== FORM SUBMISSIONS (WhatsApp) ====================
 function submitOrder(type) {
     let message = "";
-    const phoneNumber = "918806713256"; // store number
+    const phoneNumber = "918806713256";
 
     if (type === 'cement') {
         const name = document.getElementById('name').value;
@@ -106,21 +105,19 @@ function submitOrder(type) {
         const time = document.getElementById('deliveryTime').value;
         const deliveryCharges = document.getElementById('deliveryCharges').value;
         const workerCharges = document.getElementById('workerCharges').value;
-
         const total = (quantity * rate) + parseInt(deliveryCharges) + parseInt(workerCharges);
 
-        message = `Hello Tirupati Traders, I would like to order cement:%0A%0A` +
-            `Name: ${name}%0A` +
-            `WhatsApp: ${whatsapp}%0A` +
-            `Cement Company: ${company}%0A` +
-            `Quantity: ${quantity} bags%0A` +
-            `Rate: ₹ ${rate} per bag%0A` +
-            `Delivery Address: ${address}%0A` +
-            `Preferred Delivery: ${date} ${time}%0A` +
-            `Delivery Charges: ₹ ${deliveryCharges}%0A` +
-            `Worker Charges: ₹ ${workerCharges}%0A` +
-            `Total: ₹ ${total}%0A%0A` +
-            `Please confirm my order.`;
+        message = 'Hello Tirupati Traders, I would like to order cement:%0A%0A' +
+            'Name: ' + name + '%0A' +
+            'WhatsApp: ' + whatsapp + '%0A' +
+            'Cement Company: ' + company + '%0A' +
+            'Quantity: ' + quantity + ' bags%0A' +
+            'Rate: Rs ' + rate + ' per bag%0A' +
+            'Delivery Address: ' + address + '%0A' +
+            'Preferred Delivery: ' + date + ' ' + time + '%0A' +
+            'Delivery Charges: Rs ' + deliveryCharges + '%0A' +
+            'Worker Charges: Rs ' + workerCharges + '%0A' +
+            'Total: Rs ' + total + '%0A%0APlease confirm my order.';
     }
     else if (type === 'iron') {
         const name = document.getElementById('ironName').value;
@@ -135,23 +132,21 @@ function submitOrder(type) {
         const time = document.getElementById('ironDeliveryTime').value;
         const deliveryCharges = document.getElementById('ironDeliveryCharges').value;
         const workerCharges = document.getElementById('ironWorkerCharges').value;
-
         const quantity = ironQuintal || (ironKg / 100);
         const total = (quantity * ironRate) + parseInt(deliveryCharges) + parseInt(workerCharges);
 
-        message = `Hello Tirupati Traders, I would like to order iron:%0A%0A` +
-            `Name: ${name}%0A` +
-            `WhatsApp: ${whatsapp}%0A` +
-            `Iron Type: ${ironType}%0A` +
-            `Size: ${ironSize}%0A` +
-            `Quantity: ${ironQuintal ? ironQuintal + ' quintals' : ironKg + ' kg'}%0A` +
-            `Rate: ₹ ${ironRate} per quintal%0A` +
-            `Delivery Address: ${address}%0A` +
-            `Preferred Delivery: ${date} ${time}%0A` +
-            `Delivery Charges: ₹ ${deliveryCharges}%0A` +
-            `Worker Charges: ₹ ${workerCharges}%0A` +
-            `Total: ₹ ${total}%0A%0A` +
-            `Please confirm my order.`;
+        message = 'Hello Tirupati Traders, I would like to order iron:%0A%0A' +
+            'Name: ' + name + '%0A' +
+            'WhatsApp: ' + whatsapp + '%0A' +
+            'Iron Type: ' + ironType + '%0A' +
+            'Size: ' + ironSize + '%0A' +
+            'Quantity: ' + (ironQuintal ? ironQuintal + ' quintals' : ironKg + ' kg') + '%0A' +
+            'Rate: Rs ' + ironRate + ' per quintal%0A' +
+            'Delivery Address: ' + address + '%0A' +
+            'Preferred Delivery: ' + date + ' ' + time + '%0A' +
+            'Delivery Charges: Rs ' + deliveryCharges + '%0A' +
+            'Worker Charges: Rs ' + workerCharges + '%0A' +
+            'Total: Rs ' + total + '%0A%0APlease confirm my order.';
     }
     else if (type === 'doors') {
         const name = document.getElementById('doorsName').value;
@@ -161,27 +156,24 @@ function submitOrder(type) {
         const time = document.getElementById('doorsDeliveryTime').value;
         const deliveryCharges = document.getElementById('doorsDeliveryCharges').value;
         const workerCharges = document.getElementById('doorsWorkerCharges').value;
-
         const selectedProducts = Array.from(document.querySelectorAll('input[name="doorsProducts"]:checked'))
             .map(cb => cb.value);
         const specifications = document.getElementById('doorSpecifications').value;
 
-        message = `Hello Tirupati Traders, I would like to order doors/plywood:%0A%0A` +
-            `Name: ${name}%0A` +
-            `WhatsApp: ${whatsapp}%0A` +
-            `Products: ${selectedProducts.join(', ')}%0A` +
-            `Specifications: ${specifications}%0A` +
-            `Delivery Address: ${address}%0A` +
-            `Preferred Delivery: ${date} ${time}%0A` +
-            `Delivery Charges: ₹ ${deliveryCharges}%0A` +
-            `Worker Charges: ₹ ${workerCharges}%0A%0A` +
-            `Please contact me with available options and pricing.`;
+        message = 'Hello Tirupati Traders, I would like to order doors/plywood:%0A%0A' +
+            'Name: ' + name + '%0A' +
+            'WhatsApp: ' + whatsapp + '%0A' +
+            'Products: ' + selectedProducts.join(', ') + '%0A' +
+            'Specifications: ' + specifications + '%0A' +
+            'Delivery Address: ' + address + '%0A' +
+            'Preferred Delivery: ' + date + ' ' + time + '%0A' +
+            'Delivery Charges: Rs ' + deliveryCharges + '%0A' +
+            'Worker Charges: Rs ' + workerCharges + '%0A%0A' +
+            'Please contact me with available options and pricing.';
     }
 
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+    const whatsappUrl = 'https://wa.me/' + phoneNumber + '?text=' + message;
     window.open(whatsappUrl, '_blank');
-
-    // Reset form
     document.getElementById(type + 'OrderForm').reset();
     alert('Your order has been submitted! We will contact you shortly on WhatsApp.');
 }
@@ -212,8 +204,9 @@ function setMinDeliveryDate() {
     });
 }
 
-// Smooth scrolling for anchor links
+// Smooth scrolling + close mobile menu on link click
 function initSmoothScroll() {
+    const navLinks = document.querySelector('.nav-links');
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
@@ -221,10 +214,40 @@ function initSmoothScroll() {
             const target = document.querySelector(href);
             if (target) {
                 e.preventDefault();
+                if (navLinks) navLinks.classList.remove('mobile-open');
                 target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
     });
+}
+
+// ==================== DYNAMIC NAV STICKY OFFSET ====================
+function setNavStickyOffset() {
+    const header = document.querySelector('header');
+    const nav = document.querySelector('nav');
+    if (header && nav) {
+        const headerH = header.getBoundingClientRect().height;
+        nav.style.top = headerH + 'px';
+    }
+}
+
+// ==================== ACTIVE NAV LINK ON SCROLL ====================
+function initActiveNavHighlight() {
+    const sections = document.querySelectorAll('section[id], footer[id]');
+    const navLinkEls = document.querySelectorAll('.nav-links a[href^="#"]');
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                navLinkEls.forEach(function(link) {
+                    link.style.backgroundColor = '';
+                    if (link.getAttribute('href') === '#' + entry.target.id) {
+                        link.style.backgroundColor = 'rgba(255,255,255,0.25)';
+                    }
+                });
+            }
+        });
+    }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+    sections.forEach(function(s) { observer.observe(s); });
 }
 
 // ==================== INITIALIZE ON DOM LOAD ====================
@@ -233,15 +256,14 @@ document.addEventListener('DOMContentLoaded', function() {
     setMinDeliveryDate();
     initSmoothScroll();
     attachFormEvents();
+    setNavStickyOffset();
+    initActiveNavHighlight();
 
-    // Fix for mobile viewport height
     function setVH() {
         let vh = window.innerHeight * 0.01;
-        document.documentElement.style.setProperty('--vh', `${vh}px`);
+        document.documentElement.style.setProperty('--vh', vh + 'px');
+        setNavStickyOffset();
     }
     setVH();
     window.addEventListener('resize', setVH);
-
 });
-
-// fixed the red section of home page 
